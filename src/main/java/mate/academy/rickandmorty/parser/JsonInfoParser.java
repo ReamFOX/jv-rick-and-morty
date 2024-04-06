@@ -11,12 +11,13 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 public class JsonInfoParser {
+    private static final String INFO = "info";
     private final ObjectMapper objectMapper;
 
     public CharacterInfoDto parse(String responseBody) throws JsonProcessingException,
             JSONException {
         JSONObject jsonObject = new JSONObject(responseBody);
-        JSONObject info = jsonObject.getJSONObject("info");
+        JSONObject info = jsonObject.getJSONObject(INFO);
         return objectMapper.readValue(info.toString(), CharacterInfoDto.class);
     }
 }

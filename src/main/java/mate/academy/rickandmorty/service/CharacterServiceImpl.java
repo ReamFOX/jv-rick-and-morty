@@ -1,4 +1,4 @@
-package mate.academy.rickandmorty.service.character;
+package mate.academy.rickandmorty.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
@@ -24,7 +24,7 @@ public class CharacterServiceImpl implements CharacterService {
 
     @Override
     public CharacterDto getRandom() {
-        Long randomId = RandomIdGenerator.generateId();
+        Long randomId = RandomIdGenerator.generateRandomId();
         Character character = repository.findById(randomId).orElseThrow(
                 () -> new EntityNotFoundException("Character with id " + randomId
                         + " doesn't exist"));

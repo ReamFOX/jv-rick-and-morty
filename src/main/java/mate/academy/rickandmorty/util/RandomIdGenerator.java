@@ -9,7 +9,7 @@ public class RandomIdGenerator {
     @Setter
     private static int quantity;
 
-    public static Long generateId() {
+    public static Long generateRandomId() {
         return random.nextLong(quantity) + CORRECTION;
     }
 }

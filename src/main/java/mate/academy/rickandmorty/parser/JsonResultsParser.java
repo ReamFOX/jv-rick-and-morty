@@ -13,14 +13,15 @@ import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
-public class JsonDataParser {
+public class JsonResultsParser {
+    private static final String RESULTS = "results";
     private final ObjectMapper objectMapper;
 
     public List<CharacterResponseDataDto> parse(String responseBody)
             throws JSONException, JsonProcessingException {
 
         JSONObject jsonObject = new JSONObject(responseBody);
-        JSONArray results = jsonObject.getJSONArray("results");
+        JSONArray results = jsonObject.getJSONArray(RESULTS);
         List<CharacterResponseDataDto> characters = new ArrayList<>();
 
         for (int i = 0; i < results.length(); i++) {
