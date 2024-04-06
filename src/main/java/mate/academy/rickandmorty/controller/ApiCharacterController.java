@@ -1,19 +1,19 @@
 package mate.academy.rickandmorty.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.internal.CharacterIndex;
 import jakarta.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import mate.academy.rickandmorty.dto.external.CharacterInfoDto;
 import mate.academy.rickandmorty.dto.external.CharacterResponseDataDto;
+import mate.academy.rickandmorty.exception.FetchingDataException;
 import mate.academy.rickandmorty.mapper.CharacterMapper;
 import mate.academy.rickandmorty.model.Character;
 import mate.academy.rickandmorty.parser.JsonDataParser;
 import mate.academy.rickandmorty.parser.JsonInfoParser;
 import mate.academy.rickandmorty.repository.CharacterRepository;
+import mate.academy.rickandmorty.util.RandomIdGenerator;
 import org.json.JSONException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,12 +31,14 @@ public class ApiCharacterController {
 
     @PostConstruct
     public void fetchAndStoreCharacters() {
-        String url = BASE_URL;
+        RestTemplate restTemplate = new RestTemplate();
         List<Character> allCharacters = new ArrayList<>();
-        do {
-            String responseBody = getResponseBody(url);
+        String url = BASE_URL;
+        while (url != null) {
+            String responseBody = getResponseBody(url, restTemplate);
             try {
                 CharacterInfoDto characterInfoDto = jsonInfoParser.parse(responseBody);
+                RandomIdGenerator.setQuantity(characterInfoDto.getCount());
                 List<CharacterResponseDataDto> charactersDto = jsonDataParser.parse(responseBody);
                 List<Character> characters = charactersDto.stream()
                         .map(characterMapper::toModel)
@@ -44,14 +46,13 @@ public class ApiCharacterController {
                 allCharacters.addAll(characters);
                 url = characterInfoDto.getNext();
             } catch (JSONException | JsonProcessingException e) {
-                throw new RuntimeException("Can`t parse JSON data response", e);
+                throw new FetchingDataException("Can`t parse JSON data response", e);
             }
-        } while (url != null);
+        }
         characterRepository.saveAll(allCharacters);
     }
 
-    private String getResponseBody(String url) {
-        RestTemplate restTemplate = new RestTemplate();
+    private String getResponseBody(String url, RestTemplate restTemplate) {
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
         if (response.getStatusCode() != HttpStatus.OK) {
             throw new RuntimeException("HTTP status is not ok");

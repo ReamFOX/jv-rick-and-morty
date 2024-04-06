@@ -18,9 +18,11 @@ public class JsonDataParser {
 
     public List<CharacterResponseDataDto> parse(String responseBody)
             throws JSONException, JsonProcessingException {
+
         JSONObject jsonObject = new JSONObject(responseBody);
         JSONArray results = jsonObject.getJSONArray("results");
         List<CharacterResponseDataDto> characters = new ArrayList<>();
+
         for (int i = 0; i < results.length(); i++) {
             JSONObject characterJson = results.getJSONObject(i);
             CharacterResponseDataDto character =

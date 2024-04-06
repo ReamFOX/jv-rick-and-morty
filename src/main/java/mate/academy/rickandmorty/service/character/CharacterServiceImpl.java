@@ -18,18 +18,13 @@ public class CharacterServiceImpl implements CharacterService {
     private final CharacterMapper characterMapper;
 
     @Override
-    public void saveAll(List<Character> characterList) {
-        repository.saveAll(characterList);
-    }
-
-    @Override
     public List<CharacterDto> findAll(Pageable pageable) {
         return repository.findAll(pageable).stream().map(characterMapper::toDto).toList();
     }
 
     @Override
     public CharacterDto getRandom() {
-        Long randomId = RandomIdGenerator.generateId(19);
+        Long randomId = RandomIdGenerator.generateId();
         Character character = repository.findById(randomId).orElseThrow(
                 () -> new EntityNotFoundException("Character with id " + randomId
                         + " doesn't exist"));
