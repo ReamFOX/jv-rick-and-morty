@@ -18,8 +18,8 @@ public class CharacterServiceImpl implements CharacterService {
     private final CharacterMapper characterMapper;
 
     @Override
-    public List<CharacterDto> findAll(Pageable pageable) {
-        return repository.findAll(pageable).stream().map(characterMapper::toDto).toList();
+    public List<CharacterDto> findAllByName(String param) {
+        return repository.findByNameLikeIgnoreCase(param).stream().map(characterMapper::toDto).toList();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package mate.academy.rickandmorty.controller;
+package mate.academy.rickandmorty.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.annotation.PostConstruct;
@@ -17,12 +17,12 @@ import mate.academy.rickandmorty.util.RandomIdGenerator;
 import org.json.JSONException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+@Component
 @RequiredArgsConstructor
-@RestController
-public class ApiCharacterController {
+public class ApiClient {
     private static final String BASE_URL = "https://rickandmortyapi.com/api/character";
     private final CharacterRepository characterRepository;
     private final CharacterMapper characterMapper;
