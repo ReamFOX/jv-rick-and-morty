@@ -8,7 +8,6 @@ import mate.academy.rickandmorty.mapper.CharacterMapper;
 import mate.academy.rickandmorty.model.Character;
 import mate.academy.rickandmorty.repository.CharacterRepository;
 import mate.academy.rickandmorty.util.RandomIdGenerator;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,7 +18,10 @@ public class CharacterServiceImpl implements CharacterService {
 
     @Override
     public List<CharacterDto> findAllByName(String param) {
-        return repository.findByNameLikeIgnoreCase(param).stream().map(characterMapper::toDto).toList();
+        return repository.findByNameLikeIgnoreCase(param)
+                .stream()
+                .map(characterMapper::toDto)
+                .toList();
     }
 
     @Override
