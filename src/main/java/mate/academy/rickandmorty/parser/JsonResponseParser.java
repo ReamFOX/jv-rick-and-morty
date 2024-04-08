@@ -20,8 +20,7 @@ public class JsonResponseParser {
     private final ObjectMapper objectMapper;
 
     public CharacterInfoDto parseToCharacterInfo(String responseBody)
-            throws JsonProcessingException,
-            JSONException {
+            throws JsonProcessingException, JSONException {
         JSONObject info = new JSONObject(responseBody).getJSONObject(INFO);
         return objectMapper.readValue(info.toString(), CharacterInfoDto.class);
     }
