@@ -12,7 +12,6 @@ databaseChangeLog:
                   autoIncrement: true
                   constraints:
                     primaryKey: true
-                    nullable: false
               - column:
                   name: external_id
                   type: bigint
@@ -27,6 +26,10 @@ databaseChangeLog:
               - column:
                   name: status
                   type: varchar(255)
+                  constraints:
+                    nullable: false
               - column:
                   name: gender
                   type: varchar(255)
+                  constraints:
+                    nullable: false

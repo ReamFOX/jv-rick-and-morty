@@ -2,7 +2,9 @@ package mate.academy.rickandmorty.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import mate.academy.rickandmorty.dto.external.CharacterResponseDataDto;
 import mate.academy.rickandmorty.dto.internal.CharacterDto;
 import mate.academy.rickandmorty.mapper.CharacterMapper;
 import mate.academy.rickandmorty.model.Character;
@@ -15,6 +17,16 @@ import org.springframework.stereotype.Service;
 public class CharacterServiceImpl implements CharacterService {
     private final CharacterRepository repository;
     private final CharacterMapper characterMapper;
+
+    @Override
+    public List<CharacterDto> saveAll(List<CharacterResponseDataDto> responseDataDtos) {
+        List<Character> characters = responseDataDtos.stream()
+                .map(characterMapper::toModel)
+                .toList();
+        return repository.saveAll(characters).stream()
+                .map(characterMapper::toDto)
+                .collect(Collectors.toList());
+    }
 
     @Override
     public List<CharacterDto> findAllByName(String param) {

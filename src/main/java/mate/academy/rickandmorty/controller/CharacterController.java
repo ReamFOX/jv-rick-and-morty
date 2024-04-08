@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Character browsing", description = "Endpoints for browsing characters")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/character")
+@RequestMapping("/characters")
 public class CharacterController {
     private final CharacterService characterService;
 

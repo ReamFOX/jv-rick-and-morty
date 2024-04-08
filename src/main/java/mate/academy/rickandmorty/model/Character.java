@@ -19,6 +19,8 @@ public class Character {
     private Long externalId;
     @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String status;
+    @Column(nullable = false)
     private String gender;
 }
