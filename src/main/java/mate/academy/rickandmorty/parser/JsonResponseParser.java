@@ -19,13 +19,14 @@ public class JsonResponseParser {
     private static final String INFO = "info";
     private final ObjectMapper objectMapper;
 
-    public CharacterInfoDto parseInfo(String responseBody) throws JsonProcessingException,
+    public CharacterInfoDto parseToCharacterInfo(String responseBody)
+            throws JsonProcessingException,
             JSONException {
         JSONObject info = new JSONObject(responseBody).getJSONObject(INFO);
         return objectMapper.readValue(info.toString(), CharacterInfoDto.class);
     }
 
-    public List<CharacterResponseDataDto> parseResults(String responseBody)
+    public List<CharacterResponseDataDto> parseToCharacterData(String responseBody)
             throws JSONException, JsonProcessingException {
 
         JSONArray results = new JSONObject(responseBody).getJSONArray(RESULTS);

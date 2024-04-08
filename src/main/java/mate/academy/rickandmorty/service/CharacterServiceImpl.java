@@ -9,7 +9,7 @@ import mate.academy.rickandmorty.dto.internal.CharacterDto;
 import mate.academy.rickandmorty.mapper.CharacterMapper;
 import mate.academy.rickandmorty.model.Character;
 import mate.academy.rickandmorty.repository.CharacterRepository;
-import mate.academy.rickandmorty.util.RandomIdGenerator;
+import mate.academy.rickandmorty.util.RandomGeneratorUtil;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -38,7 +38,8 @@ public class CharacterServiceImpl implements CharacterService {
 
     @Override
     public CharacterDto getRandom() {
-        Long randomId = RandomIdGenerator.generateRandomId();
+        Long maxGeneratedId = repository.count();
+        Long randomId = RandomGeneratorUtil.generateRandomId(maxGeneratedId);
         Character character = repository.findById(randomId).orElseThrow(
                 () -> new EntityNotFoundException("Character with id " + randomId
                         + " doesn't exist"));
