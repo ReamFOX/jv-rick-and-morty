@@ -1,7 +1,6 @@
-package mate.academy.rickandmorty.config;
+package mate.academy.rickandmorty.service;
 
 import lombok.RequiredArgsConstructor;
-import mate.academy.rickandmorty.service.ApiClient;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
